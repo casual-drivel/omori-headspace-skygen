@@ -56,11 +56,12 @@ class Engine:
         self.noto = notoSpread.Noto(screen_x=self.xRes,
                                    screen_y=self.yRes,
                                    fontSize=64,
-                                    pixelSize=2,
+                                   pixelSize=2,
                                    color=(255, 235, 255),
                                    background=(108, 15, 254),
                                    text=self.emojis
                                    )
+        self.noto.initFunctions()
         self.renderingSurface = self.noto.renderSplayed()
 
 
@@ -86,7 +87,7 @@ class Engine:
                         self.screenMode = 'fullscreen'
                         # pygame.display.toggle_fullscreen()
                         self.xRes, self.yRes = self.getMaxResolution()
-                        print(self.getMaxResolution())
+                        # print(self.getMaxResolution())
                         self.redrawNeeded = True
                         self.screen = pygame.display.set_mode((self.xRes, self.yRes),pygame.FULLSCREEN)
                     elif self.screenMode == 'fullscreen':
@@ -111,7 +112,3 @@ class Engine:
             if self.redrawNeeded:
                 self.notoSpread()
                 self.redrawNeeded = False
-            # process the "spread" loop
-            pass
-
-

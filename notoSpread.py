@@ -3,6 +3,13 @@ import random
 
 '''library for printing notoemoji wallpapers'''
 
+# Bugs to patch
+# - Emoji's consist of multiple characters, causing issues when splitting them
+# - "pop" instead of "select" for areas to "draw on" in spaceoutsurface function
+# - Finish "rotation" function, ensure each rotation is a new surface
+# - Add "stars" afterwards
+
+
 class Noto:
     def __init__(self, fontSize=64, text="🖤🖤❤⬛︎", color="white", screen_x=1920, screen_y=1080, background="black",pixelSize = 16):
         self.fontSize = fontSize
@@ -18,6 +25,7 @@ class Noto:
         self.cell_dict = {}
         self.emojiArray = []
         self.emoji_cell_dict_mask = {} # the random "positions" we selected from cell_dict
+        self.padding = 16 # how much padding to add and space out emoji's
 
         # load the stuff we need
         pygame.font.init()
@@ -34,7 +42,7 @@ class Noto:
         # returns an array of the surfaces, pixelated
         # self.emojiArray
         for emoji in self.text: # for each text emoji we have
-            print(emoji)
+            # print(emoji)
             surf = self.fontSet.render(text = emoji,
                                        antialias = True,
                                        color = self.color
@@ -45,11 +53,11 @@ class Noto:
 
     def defineCells(self):
         '''figure out the size of cells based on the font-size'''
-        spacing_y = [spacing_y for spacing_y in range(0,self.screen_y,self.fontSize)]
-        spacing_x = [spacing_x for spacing_x in range(0,self.screen_x, self.fontSize)]
+        spacing_y = [spacing_y for spacing_y in range(0,self.screen_y,self.fontSize+self.padding)]
+        spacing_x = [spacing_x for spacing_x in range(0,self.screen_x, self.fontSize+self.padding)]
         # now create an entire dictionary of our array
-        for y in spacing_y:
-            self.cell_dict[y] = spacing_x
+        for row in spacing_y:
+            self.cell_dict[row] = spacing_x
 
     def spaceOutSurface(self):
         # Change this function later to "pop" to the mask, so we can draw stars on the leftovers
@@ -84,7 +92,7 @@ class Noto:
         # Datastructure is [[source,(x,y)],[source,(x,y)]]
         for row in self.emoji_cell_dict_mask:
             for position in self.emoji_cell_dict_mask[row]:
-                emoji_mask_surfaces.append([random.choice(self.emojiArray),(row,position)]) # Get a random surface
+                emoji_mask_surfaces.append([random.choice(self.emojiArray),(position,row)]) # Get a random surface
 
         renderSurface.blits(blit_sequence=emoji_mask_surfaces)
 
