@@ -81,7 +81,7 @@ class Engine:
             if event.type == pygame.KEYDOWN: # or event.type == pygame.KEYUP: # Removed the keyup section
                 if event.dict['key'] == pygame.K_p: # screenshot
                     # print('screenshot taken!')
-                    pygame.image.save(self.screen, "screenshot.png")
+                    pygame.image.save(self.screen, "example1.png")
                 if event.dict['key'] == pygame.K_f: # fullscreen toggle
                     if self.screenMode == 'windowed':
                         self.screenMode = 'fullscreen'

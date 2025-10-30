@@ -31,6 +31,7 @@ class Noto:
         self.starSize = 4
         self.starfontSet = pygame.font.Font("NotoEmoji-Regular.ttf", size=self.starSize)
         self.starDensity = 5
+        self.starFontSurfaces = []
         self.starSurfaces = []
 
         # load the stuff we need
@@ -91,25 +92,31 @@ class Noto:
         # ensure to set sizes, or give choice for random sizes
         stars = ".'+*`"
         for star in stars:
-            self.starSurfaces.append(self.starfontSet.render(star,True,self.color))
+            self.starFontSurfaces.append(self.starfontSet.render(star, True, self.color))
 
-    def drawStars(self,x,y):
+    def drawStars(self):
         # take x,y arguments - the total size of the cell (in font pixels + padding?)
         # pick "density" amount of random pixels - ensure they're spaced out enough
         # draw random stars on those pixels
         # return the surface
-        tile = pygame.surface.Surface((x,y)) # creates a "tile" of size
+        x = self.fontSize + self.padding
+        y = x
+        tile = pygame.surface.Surface((x,y)) # creates a "tile" of size based on font
+        tile.fill(self.background) # adjust transparency later
         for density in range(0,self.starDensity):
             randomX = random.randint(0,x)
             randomY = random.randint(0,y)
-            tile.blit(random.choice(self.starSurfaces),(randomX,randomY))
+            tile.blit(random.choice(self.starFontSurfaces), (randomX, randomY))
         return tile
 
     def starArray(self):
-        pass
         # for each row and each cell in cell_dict
         # call drawStars(x,y,density)
         # append to starblits list [[surface,(x,y)],[surface,(x,y)]]
+        for y in self.cell_dict: # y is vertical
+            for x in self.cell_dict[y]: # x is horizontal, readability
+                self.starSurfaces.append([self.drawStars(),(x,y)])
+
 
     # need to rotate surfaces
     def rotateSurface(self,surface, degrees):
@@ -145,7 +152,11 @@ class Noto:
                     self.rotateSurface(random.choice(self.emojiArray), self.degrees),(position,row)
                 ])
 
+        self.drawStars()
+        self.starArray()
+
         # Do the thing
+        renderSurface.blits(blit_sequence=self.starSurfaces)
         renderSurface.blits(blit_sequence=emoji_mask_surfaces)
         # final step, give the surface, rendered, and ready to be displayed
         return renderSurface
