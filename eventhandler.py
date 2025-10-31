@@ -1,5 +1,6 @@
 import pygame
 
+
 class Events:
     def __init__(self, events):
         self.dummy = 'dummy'

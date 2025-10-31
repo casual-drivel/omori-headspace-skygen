@@ -44,7 +44,6 @@ P = Printscreen
 ---
 
 *Made with love, Pygame, and a sprinkle of nostalgia—just like that one‑second video you can’t stop replaying.* 🎈
-
 --- 
 
 Feel free to fork, contribute, I really dont care about this project.

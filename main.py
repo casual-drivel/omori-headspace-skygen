@@ -17,15 +17,14 @@ from engine import Engine
 # star size variation
 # emoji-picker
 
-engine=Engine('spread') # can be 'fillscreen' or 'spread'
+engine = Engine('spread')  # can be 'fillscreen' or 'spread'
 engine.initFunctions()
-# xRes, yRes = engine.getMaxResolution()
 
 
 while engine.running:
 
-    engine.eventHandler() # Handle the ongoing events
-    engine.mainFunction() # run the main rendering function
+    engine.eventHandler()  # Handle the ongoing events
+    engine.mainFunction()  # run the main rendering function
     engine.clock.tick(60)
 
 engine.pygame.quit()
