@@ -27,6 +27,10 @@ pip install -r requirements.txt
 python main.py
 ```
 
+## Keys (while the gui is sorted out)
+F = Fullscreen Toggle
+P = Printscreen
+
 ## Example Output
 
 ![example1.png](./example1.png)
