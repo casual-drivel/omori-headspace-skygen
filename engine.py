@@ -7,7 +7,7 @@ import gui
 class Engine:
     def __init__(self, mode):
         # Fallbacks
-        self.emojis = "🤎🖤💛💚💙✨⭐💫❤︎‍🩹🌟🌙☄"
+        self.emojis = "🌎️🛌🛰️📖💎🪐🌕️👁️️💻⭐" # "🤎🖤💛💚💙✨⭐💫❤︎‍🩹🌟🌙☄"
         self.xRes = 1280
         self.yRes = 1024
         self.mode = mode  # can be 'fillscreen' 'spread'
