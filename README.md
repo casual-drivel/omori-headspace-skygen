@@ -1,8 +1,8 @@
 **README.md**
 
-# Noto Emoji Wallpaper Generator 🎉
+# Emoji Wallpaper Generator 🎉
 
-Welcome to the **Noto Emoji Wallpaper Generator**, the ultimate meme‑powered tool for turning your screen into a kaleidoscope of emojis, stars, and custom color schemes! 🚀✨
+Welcome to the **Emoji Wallpaper Generator**, the ultimate meme‑powered tool for turning your screen into a kaleidoscope of emojis, stars, and custom color schemes! 🚀✨
 
 ## What’s This All About?
 
@@ -23,6 +23,7 @@ Welcome to the **Noto Emoji Wallpaper Generator**, the ultimate meme‑powered t
 ## How to Run
 
 ```
+pip install -r requirements.txt
 python main.py
 ```
 
@@ -38,7 +39,7 @@ python main.py
 
 ---
 
-*Made with love, memes, and a sprinkle of nostalgia—just like that one‑second video you can’t stop replaying.* 🎈
+*Made with love, Pygame, and a sprinkle of nostalgia—just like that one‑second video you can’t stop replaying.* 🎈
 
 --- 
 
