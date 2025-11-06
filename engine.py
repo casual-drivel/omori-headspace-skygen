@@ -3,11 +3,10 @@ import notoFillscreen
 import notoSpread
 import gui
 
-
 class Engine:
     def __init__(self, mode):
         # Fallbacks
-        self.emojis = "🌎️🛌🛰️📖💎🪐🌕️👁️️💻⭐" # "🤎🖤💛💚💙✨⭐💫❤︎‍🩹🌟🌙☄"
+        self.emojis = "🤎🖤💛💚💙✨⭐💫❤︎‍🩹🌟🌙☄" #"🌎️🛌🛰️📖💎🪐🌕️👁️s⭐️"
         self.xRes = 1280
         self.yRes = 1024
         self.mode = mode  # can be 'fillscreen' 'spread'
@@ -36,6 +35,12 @@ class Engine:
         pygame.font.init()
         # self.initDisplay() # might be unneeded
 
+    def guiInit(self):
+        # given our shoddy architecture, we'll call this during the initial rendering, and not the loop
+        self.ui = gui.Gui(self.xRes,self.yRes,self.renderingSurface)
+        self.ui.clock = self.clock
+        # self.ui.drawButton() # POC to test this works, we really dont need it actually
+
     def notoFillscreen(self):
         # Used only for the screen filler
         # This ones important because its the actual rendering class being
@@ -62,6 +67,7 @@ class Engine:
                                     )
         self.noto.initFunctions()
         self.renderingSurface = self.noto.renderSplayed()
+        self.guiInit()
 
     def returnDisplay(self):
         return self.screen
@@ -97,6 +103,7 @@ class Engine:
                         self.redrawNeeded = True
                         pygame.display.set_mode(
                             (self.xRes, self.yRes), pygame.RESIZABLE)
+            self.ui.processEvent(event)
 
     # The thing responsible for piecing it all together
     def mainFunction(self):
@@ -110,6 +117,11 @@ class Engine:
         if self.mode == 'spread':
             self.screen.fill("black")
             self.screen.blit(self.renderingSurface, (0, 0))
+
+            # UI Stuff
+            self.ui.processTime()
+            self.ui.draw_ui()
+
             self.pygame.display.flip()
             if self.redrawNeeded:
                 self.notoSpread()
