@@ -1,5 +1,5 @@
-import pygame
 from engine import Engine
+import asyncio
 
 
 # imports notoemoji ttf file

@@ -16,7 +16,7 @@ class Engine:
 
         # important stuff
         self.running = True
-        self.screen = pygame.display.set_mode((self.xRes, self.yRes))
+        self.screen = pygame.display.set_mode((self.xRes, self.yRes), pygame.RESIZABLE)
         self.clock = pygame.time.Clock()
         self.events = None
         self.noto = None  # the Noto Drawing Library
@@ -37,9 +37,10 @@ class Engine:
 
     def guiInit(self):
         # given our shoddy architecture, we'll call this during the initial rendering, and not the loop
-        self.ui = gui.Gui(self.xRes,self.yRes,self.renderingSurface)
+        self.ui = gui.Gui(self.xRes,self.yRes,self.screen)
         self.ui.clock = self.clock
         # self.ui.drawButton() # POC to test this works, we really dont need it actually
+        self.ui.uiContainerInit()
 
     def notoFillscreen(self):
         # Used only for the screen filler
@@ -56,6 +57,7 @@ class Engine:
         self.noto.emojiArrayInit()
         self.renderingSurface = self.noto.render_advanced()
 
+
     def notoSpread(self):
         self.noto = notoSpread.Noto(screen_x=self.xRes,
                                     screen_y=self.yRes,
@@ -68,6 +70,7 @@ class Engine:
         self.noto.initFunctions()
         self.renderingSurface = self.noto.renderSplayed()
         self.guiInit()
+
 
     def returnDisplay(self):
         return self.screen
@@ -83,17 +86,19 @@ class Engine:
         for event in self.events:
             if event.type == pygame.QUIT:
                 self.running = False
+
             if event.type == pygame.KEYDOWN:  # or event.type == pygame.KEYUP: # Removed the keyup section
+                if event.dict['key'] == pygame.K_h:
+                    self.ui.toggleUI()
                 if event.dict['key'] == pygame.K_p:  # screenshot
                     # print('screenshot taken!')
                     pygame.image.save(self.screen, "example1.png")
                 if event.dict['key'] == pygame.K_f:  # fullscreen toggle
                     if self.screenMode == 'windowed':
                         self.screenMode = 'fullscreen'
-                        # pygame.display.toggle_fullscreen()
-                        self.xRes, self.yRes = self.getMaxResolution()
                         # print(self.getMaxResolution())
                         self.redrawNeeded = True
+                        self.xRes, self.yRes = self.getMaxResolution()
                         self.screen = pygame.display.set_mode(
                             (self.xRes, self.yRes), pygame.FULLSCREEN)
                     elif self.screenMode == 'fullscreen':
@@ -103,6 +108,15 @@ class Engine:
                         self.redrawNeeded = True
                         pygame.display.set_mode(
                             (self.xRes, self.yRes), pygame.RESIZABLE)
+
+            # need to rewrite resizing logic
+            # if event.type == pygame.WINDOWRESIZED:
+            #     self.redrawNeeded = True
+            #     vidinfo = pygame.display.Info()
+            #     self.xRes = vidinfo.current_w
+            #     self.yRes = vidinfo.current_h
+            #     pygame.display.set_mode((self.xRes, self.yRes), pygame.RESIZABLE)
+
             self.ui.processEvent(event)
 
     # The thing responsible for piecing it all together

@@ -1,5 +1,6 @@
 import pygame
 import pygame_gui
+from i18n.translations import container
 
 
 class Gui:
@@ -17,6 +18,9 @@ class Gui:
         self.clock = None
         # self.event = None
         self.mainSurface = mainSurface
+        self.uiContainer = None
+        self.uiVisible = True
+        self.uiElements = {}
 
         # Things we will need for drawing...
 
@@ -39,7 +43,7 @@ class Gui:
     #
     # def initGui(self):
     #     # ????
-    #     # MUDA
+    #     # MUDADA
     #     # WRYYY
     #     pass
 
@@ -52,19 +56,49 @@ class Gui:
         time_delta=self.clock.tick(60)/1000.0
         self.manager.update(time_delta)
 
-    def drawButton(self):
-        # plug this in when drawing the rendering surface
-        # Simply a POC
-        hello_button = pygame_gui.elements.UIButton(
-            relative_rect=pygame.Rect((350, 275), (100, 50)),
-            text='Say Hello',
+
+    def slider(self, name, x,y):
+        self.uiElements[name] = pygame_gui.elements.UIHorizontalSlider(
+            relative_rect=pygame.Rect((x+80, y), (200, 30)),
+            container = self.uiContainer,
+            start_value= 125,
+            value_range=(0,255),
+            manager=self.manager,
+            parent_element=self.uiContainer
+        )
+
+        label = pygame_gui.elements.UILabel(
+            relative_rect=pygame.Rect((x,y),(x+80, 30)),
+            text=name,
+            container=self.uiContainer,
+            # parent_element=self.uiElements,
             manager=self.manager
         )
 
+    def uiContainerInit(self):
+        self.uiContainer = pygame_gui.elements.UIWindow(
+            rect = pygame.Rect((300,300),(300,300)),
+            manager=self.manager,
+            window_display_title="Stuff Picker",
+            resizable=True
+        )
 
+        # The actual junk that gets drawn
+        self.slider("Red",0,0)
+        self.slider("Blue", 0, 30)
+        self.slider("Green", 0, 60)
 
-    def colorSlider(self):
-        pass
+    def toggleUI(self):
+        self.uiVisible = not self.uiVisible # toggle if called
+        if self.uiVisible:
+            # Show it
+            self.uiContainer.show()
+            print(self.uiElements['Red'].get_current_value())
+        else:
+            # Hide it
+            self.uiContainer.hide()
+            pass
+
 
     def draw_ui(self):
         # Does the needful, put in rendering loop with the time
