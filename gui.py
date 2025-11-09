@@ -4,7 +4,7 @@ from i18n.translations import container
 
 
 class Gui:
-    def __init__(self, screenX, screenY, mainSurface):
+    def __init__(self, screenX, screenY, defaultEmojis, mainSurface):
         # We will need...
         # screen resolution
         # this is really just a wrapper for the gui library
@@ -21,6 +21,8 @@ class Gui:
         self.uiContainer = None
         self.uiVisible = True
         self.uiElements = {}
+        self.elementValues = {}
+        self.defaultEmojis = defaultEmojis
 
         # Things we will need for drawing...
 
@@ -110,8 +112,11 @@ class Gui:
             resizable=True
         )
 
-        # The actual junk that gets drawn
+        # The actual elements that gets drawn
         self.textEntryBox("Emojis",0 ,0)
+        # pass in the default emojis, limit this to only emoji's later
+        self.uiElements['Emojis'].set_text(self.defaultEmojis)
+
         self.guiButton("Redraw", 230,0)
         self.slider("Red",0,30)
         self.slider("Blue", 0, 60)
@@ -119,14 +124,13 @@ class Gui:
 
     def getValues(self):
         # Dump the values we need
-        values = {}
         for key in self.uiElements:
             # checks if element is entry line, gets value
             if isinstance(self.uiElements[key], pygame_gui.elements.ui_text_entry_line.UITextEntryLine):
-                values[key] = self.uiElements[key].get_text()
+                self.elementValues[key] = self.uiElements[key].get_text()
             # checks if element is slider, gets value
             if isinstance(self.uiElements[key], pygame_gui.elements.UIHorizontalSlider):
-                values[key] = self.uiElements[key].get_current_value()
+                self.elementValues[key] = self.uiElements[key].get_current_value()
 
         # we end up with something like {'Emojis': '', 'Red': 125, 'Blue': 125, 'Green': 125}
 

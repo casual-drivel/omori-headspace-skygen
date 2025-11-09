@@ -37,7 +37,7 @@ class Engine:
 
     def guiInit(self):
         # given our shoddy architecture, we'll call this during the initial rendering, and not the loop
-        self.ui = gui.Gui(self.xRes,self.yRes,self.screen)
+        self.ui = gui.Gui(self.xRes,self.yRes,self.emojis,self.screen)
         self.ui.clock = self.clock
         # self.ui.drawButton() # POC to test this works, we really dont need it actually
         self.ui.uiContainerInit()
@@ -118,6 +118,10 @@ class Engine:
             #     pygame.display.set_mode((self.xRes, self.yRes), pygame.RESIZABLE)
 
             self.ui.processEvent(event)
+            if self.ui.uiElements['Redraw'].check_pressed() == True:
+                self.ui.getValues()
+                self.emojis = self.ui.elementValues['Emojis']
+                self.redrawNeeded = True
 
     # The thing responsible for piecing it all together
     def mainFunction(self):
