@@ -51,14 +51,14 @@ class Noto:
         # ... and the stars
         self.starSize = 4
         self.starfontSet = pygame.font.Font(
-            "NotoEmojiFont/NotoEmoji-Regular.ttf", size=self.starSize)
+            "Resources/NotoEmojiFont/NotoEmoji-Regular.ttf", size=self.starSize)
         self.starDensity = 5
         self.starFontSurfaces = []
         self.starSurfaces = []
 
         # load the stuff we need
         self.fontSet = pygame.font.Font(
-            "NotoEmojiFont/NotoEmoji-Regular.ttf",
+            "Resources/NotoEmojiFont/NotoEmoji-Regular.ttf",
             size=self.fontSize)
         self.initFunctions()
 

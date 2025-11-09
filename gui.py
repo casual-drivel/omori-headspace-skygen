@@ -12,7 +12,7 @@ class Gui:
 
         self.screenX = screenX
         self.screenY = screenY
-        self.manager = pygame_gui.UIManager((self.screenX, self.screenY))
+        self.manager = pygame_gui.UIManager((self.screenX, self.screenY), 'Resources/fontSettings.json')
 
         # These should be handed in by the running app
         self.clock = None
@@ -42,6 +42,7 @@ class Gui:
     #     self.initGui()
     #
     # def initGui(self):
+    #     self.loadFont()
     #     # ????
     #     # MUDADA
     #     # WRYYY
@@ -56,13 +57,29 @@ class Gui:
         time_delta=self.clock.tick(60)/1000.0
         self.manager.update(time_delta)
 
+    # def loadFont(self):
+    #     font = pygame_gui.core.interfaces.manager_interface.IUIManagerInterface.add_font_paths(
+    #         font_name = "Noto Emoji",
+    #         regular_path = "NotoEmojiFont/NotoEmoji-Regular.ttf"
+    #     )
+    # # Button to initiate Redraw
+
+    # Text input for Emojis
+    def textEntryBox(self):
+        emojiBox = pygame_gui.elements.ui_text_entry_line.UITextEntryLine(
+            relative_rect = pygame.Rect((0,0),(170,30)),
+            container = self.uiContainer,
+            manager = self.manager,
+            object_id = "defaults"
+        )
+
 
     def slider(self, name, x,y):
         self.uiElements[name] = pygame_gui.elements.UIHorizontalSlider(
             relative_rect=pygame.Rect((x+80, y), (200, 30)),
             container = self.uiContainer,
-            start_value= 125,
-            value_range=(0,255),
+            start_value = 125,
+            value_range=(0, 255),
             manager=self.manager,
             parent_element=self.uiContainer
         )
@@ -84,9 +101,10 @@ class Gui:
         )
 
         # The actual junk that gets drawn
-        self.slider("Red",0,0)
-        self.slider("Blue", 0, 30)
-        self.slider("Green", 0, 60)
+        self.textEntryBox()
+        self.slider("Red",0,30)
+        self.slider("Blue", 0, 60)
+        self.slider("Green", 0, 120)
 
     def toggleUI(self):
         self.uiVisible = not self.uiVisible # toggle if called

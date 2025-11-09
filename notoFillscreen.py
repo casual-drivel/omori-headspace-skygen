@@ -30,7 +30,7 @@ class Noto:
         # load the stuff we need
         font.init()
         self.fontSet = font.Font(
-            "NotoEmojiFont/NotoEmoji-Regular.ttf",
+            "Resources/NotoEmojiFont/NotoEmoji-Regular.ttf",
             size=self.fontSize)
         # self.fontSet = font.SysFont("NotoEmoji", size=self.fontSize)
 
