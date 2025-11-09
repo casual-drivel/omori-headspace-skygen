@@ -57,26 +57,36 @@ class Gui:
         time_delta=self.clock.tick(60)/1000.0
         self.manager.update(time_delta)
 
-    # def loadFont(self):
-    #     font = pygame_gui.core.interfaces.manager_interface.IUIManagerInterface.add_font_paths(
-    #         font_name = "Noto Emoji",
-    #         regular_path = "NotoEmojiFont/NotoEmoji-Regular.ttf"
-    #     )
-    # # Button to initiate Redraw
+    # Button to initiate Redraw
+    def guiButton(self, name, x, y):
+        self.uiElements[name] = pygame_gui.elements.ui_button.UIButton(
+            relative_rect= pygame.Rect((x,y),(60,30)),
+            container = self.uiContainer,
+            manager = self.manager,
+            text=name
+        )
 
     # Text input for Emojis
-    def textEntryBox(self):
-        emojiBox = pygame_gui.elements.ui_text_entry_line.UITextEntryLine(
-            relative_rect = pygame.Rect((0,0),(170,30)),
+    def textEntryBox(self, name, x, y):
+        self.uiElements[name] = pygame_gui.elements.ui_text_entry_line.UITextEntryLine(
+            relative_rect = pygame.Rect((x+60,y),(170,30)),
             container = self.uiContainer,
             manager = self.manager,
             object_id = "defaults"
         )
 
+        label = pygame_gui.elements.UILabel(
+            relative_rect=pygame.Rect((x,y),(x+60, 30)),
+            text=name,
+            container=self.uiContainer,
+            # parent_element=self.uiElements,
+            manager=self.manager
+        )
+
 
     def slider(self, name, x,y):
         self.uiElements[name] = pygame_gui.elements.UIHorizontalSlider(
-            relative_rect=pygame.Rect((x+80, y), (200, 30)),
+            relative_rect=pygame.Rect((x+60, y), (230, 30)),
             container = self.uiContainer,
             start_value = 125,
             value_range=(0, 255),
@@ -85,7 +95,7 @@ class Gui:
         )
 
         label = pygame_gui.elements.UILabel(
-            relative_rect=pygame.Rect((x,y),(x+80, 30)),
+            relative_rect=pygame.Rect((x,y),(x+60, 30)),
             text=name,
             container=self.uiContainer,
             # parent_element=self.uiElements,
@@ -101,17 +111,32 @@ class Gui:
         )
 
         # The actual junk that gets drawn
-        self.textEntryBox()
+        self.textEntryBox("Emojis",0 ,0)
+        self.guiButton("Redraw", 230,0)
         self.slider("Red",0,30)
         self.slider("Blue", 0, 60)
-        self.slider("Green", 0, 120)
+        self.slider("Green", 0, 90)
+
+    def getValues(self):
+        # Dump the values we need
+        values = {}
+        for key in self.uiElements:
+            # checks if element is entry line, gets value
+            if isinstance(self.uiElements[key], pygame_gui.elements.ui_text_entry_line.UITextEntryLine):
+                values[key] = self.uiElements[key].get_text()
+            # checks if element is slider, gets value
+            if isinstance(self.uiElements[key], pygame_gui.elements.UIHorizontalSlider):
+                values[key] = self.uiElements[key].get_current_value()
+
+        # we end up with something like {'Emojis': '', 'Red': 125, 'Blue': 125, 'Green': 125}
+
 
     def toggleUI(self):
         self.uiVisible = not self.uiVisible # toggle if called
         if self.uiVisible:
             # Show it
             self.uiContainer.show()
-            print(self.uiElements['Red'].get_current_value())
+            # self.getValues() # used for testing
         else:
             # Hide it
             self.uiContainer.hide()
