@@ -29,6 +29,9 @@ python main.py
 
 ## Keys (while the gui is sorted out)
 F = Fullscreen Toggle
+
+H = Toggle GUI
+
 P = Printscreen
 
 ## Example Output
