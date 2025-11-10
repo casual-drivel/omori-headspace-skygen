@@ -70,9 +70,9 @@ class Noto:
 
     def surfaceArray(self):
         # returns an array of the surfaces, pixelated
-        # self.emojiArray
+        if self.emojiArray:
+            self.emojiArray = []
         for emoji in grapheme.graphemes(self.text):  # for each text emoji we have
-            # print(emoji)
             surf = self.fontSet.render(text=emoji,
                                        antialias=True,
                                        color=self.color
@@ -138,6 +138,9 @@ class Noto:
     def starsInit(self):
         # Initialze the stars we'll use
         # ensure to set sizes, or give choice for random sizes
+        if self.starFontSurfaces:
+            self.starFontSurfaces = []
+
         stars = ".'+*`"
         for star in stars:
             self.starFontSurfaces.append(
@@ -161,6 +164,8 @@ class Noto:
         return tile
 
     def starArray(self):
+        if self.starSurfaces:
+            self.starSurfaces = []
         # for each row and each cell in cell_dict
         # call drawStars(x,y,density)
         # append to starblits list [[surface,(x,y)],[surface,(x,y)]]
@@ -173,7 +178,6 @@ class Noto:
         rotationAngle = random.randint(-degrees, degrees)
         # returns a surface
         return pygame.transform.rotate(surface=surface, angle=rotationAngle)
-
 
     def renderSplayed(self):
         # this should *ONLY* be doing Rendering
@@ -198,3 +202,10 @@ class Noto:
         renderSurface.blits(blit_sequence=self.emojiDrawArray)
         # final step, give the surface, rendered, and ready to be displayed
         return renderSurface
+
+    def updateEmojis(self):
+        self.initFunctions()
+        self.spaceOutEmojiArray()
+        self.starsInit()
+        self.drawStars()
+        self.starArray()

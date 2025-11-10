@@ -3,6 +3,8 @@ import notoFillscreen
 import notoSpread
 import gui
 
+# 
+
 class Engine:
     def __init__(self, mode):
         # Fallbacks
@@ -120,8 +122,7 @@ class Engine:
             if self.ui.uiElements['Redraw'].check_pressed() == True:
                 self.ui.getValues()
                 self.noto.text = self.ui.elementValues['Emojis']
-                # self.noto.
-                self.noto.initFunctions()
+                self.noto.updateEmojis()
                 self.renderingSurface = self.noto.renderSplayed()
                 # self.redrawNeeded = True
 
