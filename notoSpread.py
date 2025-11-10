@@ -34,7 +34,7 @@ class Noto:
         pygame.font.init()
         self.fontSize = fontSize
         self.pixelSize = pixelSize
-        self.text = grapheme.graphemes(text)  # note this is an iterator
+        self.text = text  # note this is an iterator
         self.color = color
         self.background = background
         self.screen_x = screen_x
@@ -71,7 +71,7 @@ class Noto:
     def surfaceArray(self):
         # returns an array of the surfaces, pixelated
         # self.emojiArray
-        for emoji in self.text:  # for each text emoji we have
+        for emoji in grapheme.graphemes(self.text):  # for each text emoji we have
             # print(emoji)
             surf = self.fontSet.render(text=emoji,
                                        antialias=True,
@@ -174,14 +174,9 @@ class Noto:
         # returns a surface
         return pygame.transform.rotate(surface=surface, angle=rotationAngle)
 
-    # def rotatedSurfaces(self):
-    #     rotated_emoji_surfaces = []
-    #     for row in self.emoji_cell_dict_mask:
-    #         for position in self.emoji_cell_dict_mask[row]:
-    #             self.rotateSurface()
-    #         rotated_emoji_surfaces.append()
 
     def renderSplayed(self):
+        # this should *ONLY* be doing Rendering
         renderSurface = pygame.surface.Surface((self.screen_x, self.screen_y))
         renderSurface.fill(color=self.background)
         # take the screen resolution as arguments

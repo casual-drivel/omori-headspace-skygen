@@ -67,7 +67,6 @@ class Engine:
                                     background=(108, 15, 254),
                                     text=self.emojis
                                     )
-        self.noto.initFunctions()
         self.renderingSurface = self.noto.renderSplayed()
         self.guiInit()
 
@@ -120,8 +119,11 @@ class Engine:
             self.ui.processEvent(event)
             if self.ui.uiElements['Redraw'].check_pressed() == True:
                 self.ui.getValues()
-                self.emojis = self.ui.elementValues['Emojis']
-                self.redrawNeeded = True
+                self.noto.text = self.ui.elementValues['Emojis']
+                # self.noto.
+                self.noto.initFunctions()
+                self.renderingSurface = self.noto.renderSplayed()
+                # self.redrawNeeded = True
 
     # The thing responsible for piecing it all together
     def mainFunction(self):
@@ -141,6 +143,4 @@ class Engine:
             self.ui.draw_ui()
 
             self.pygame.display.flip()
-            if self.redrawNeeded:
-                self.notoSpread()
-                self.redrawNeeded = False
+
