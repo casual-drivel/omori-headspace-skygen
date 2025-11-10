@@ -1,7 +1,7 @@
 import pygame
 import random
 import grapheme
-from pygame import SRCALPHA, BLEND_RGBA_SUB
+import sys
 
 '''library for printing notoemoji wallpapers'''
 
@@ -77,8 +77,11 @@ class Noto:
                                        color=self.color
                                        # bgcolor = self.background
                                        )
-            pxl_surf = pygame.transform.pixelate(surf, self.pixelSize)
-            self.emojiArray.append(pxl_surf)
+            if sys.platform == "emscripten":
+                self.emojiArray.append(surf)
+            else:
+                pxl_surf = pygame.transform.pixelate(surf, self.pixelSize)
+                self.emojiArray.append(pxl_surf)
 
     def defineCells(self):
         '''figure out the size of cells based on the font-size'''
