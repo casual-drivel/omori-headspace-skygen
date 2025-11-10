@@ -123,7 +123,6 @@ class Engine:
                 vidinfo = pygame.display.Info()
                 self.xRes = vidinfo.current_w
                 self.yRes = vidinfo.current_h
-                # pygame.display.set_mode((self.xRes, self.yRes), pygame.RESIZABLE)
                 self.noto.screen_x, self.noto.screen_y = self.xRes, self.yRes
                 self.noto.update()
                 self.renderingSurface = self.noto.renderSplayed()

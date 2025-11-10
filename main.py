@@ -20,11 +20,15 @@ import asyncio
 engine = Engine('spread')  # can be 'fillscreen' or 'spread'
 engine.initFunctions()
 
+async def main():
+    while engine.running:
 
-while engine.running:
+        engine.eventHandler()  # Handle the ongoing events
+        engine.mainFunction()  # run the main rendering function
+        engine.clock.tick(60)
+        await asyncio.sleep(0)
 
-    engine.eventHandler()  # Handle the ongoing events
-    engine.mainFunction()  # run the main rendering function
-    engine.clock.tick(60)
+    engine.pygame.quit()
 
-engine.pygame.quit()
+if __name__ == "__main__":
+    asyncio.run(main())
