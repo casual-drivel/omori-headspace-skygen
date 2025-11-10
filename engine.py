@@ -93,7 +93,7 @@ class Engine:
                     self.ui.toggleUI()
                 if event.dict['key'] == pygame.K_p:  # screenshot
                     # print('screenshot taken!')
-                    pygame.image.save(self.screen, "example1.png")
+                    pygame.image.save(self.screen, "screenshot.png")
                 if event.dict['key'] == pygame.K_f:  # fullscreen toggle
                     if self.screenMode == 'windowed':
                         self.screenMode = 'fullscreen'
