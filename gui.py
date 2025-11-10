@@ -25,25 +25,15 @@ class Gui:
         self.defaultEmojis = defaultEmojis
         self.defaultValues = {}
 
-        # Things we will need for drawing...
-
-        # show/hide button
-        # bg color select
-        # emoji and star color select
-        # emoji and star size
-        # percentage of emoji and stars
-        # Rotation and Spacing/"Padding"
-        # Text input for Emojis
-
         # Extra Credit
         ## RAINBOW Mode
         ## "Holographic" Mode triggered by mouse (think shiny pokemon card)
         ## Custom Emojis and Stars
 
 
-    #     # Last Thing
+    #     # Not really Needed Here
     #     self.initGui()
-    #
+
     # def initGui(self):
     #     self.loadFont()
     #     # ????
@@ -121,7 +111,7 @@ class Gui:
         line = 30 # little thing to help understand where the line is, max lines, manual
 
         self.uiContainer = pygame_gui.elements.UIWindow(
-            rect = pygame.Rect((300,300),(360,line*16)),
+            rect = pygame.Rect((300,300),(360,line*19)),
             manager=self.manager,
             window_display_title="Stuff Picker",
             resizable=True
@@ -134,9 +124,9 @@ class Gui:
         self.guiButton("Redraw", 230,line*0)
         # needs range and label? bg color slider
         self.labelOnly('Emoji Settings',0,line*1)
-        self.slider("Emoji Red",0,255, line*2,start_value=108)
-        self.slider("Emoji Blue", 0,255, line*3,start_value=15)
-        self.slider("Emoji Green", 0,255, line*4,start_value=254)
+        self.slider("Emoji Red",0,255, line*2,start_value=255)
+        self.slider("Emoji Green", 0,255, line*3,start_value=255)
+        self.slider("Emoji Blue", 0,255, line*4,start_value=235)
         self.slider("Emoji Size",0,200, line*5,start_value=64)
         self.slider("Emoji Density",0,100, line*6,start_value=30)
         self.slider("Emoji Rotation",0,360, line*7,start_value=30)
@@ -144,12 +134,14 @@ class Gui:
         # size, density, rotation x2 spacing(emoji only)
         self.labelOnly('Star Settings',0,line*9)
         self.slider("Star Red",0,255, line*10,start_value=255)
-        self.slider("Star Blue", 0,255, line*11,start_value=235)
-        self.slider("Star Green", 0,255, line*12,start_value=255)
-        self.slider("Star Size",0,10, line*13,start_value=4) #
+        self.slider("Star Green", 0,255, line*11,start_value=255)
+        self.slider("Star Blue", 0,255, line*12,start_value=235)
+        self.slider("Star Size",0,20, line*13,start_value=10) #
         self.slider("Star Density",0,20, line*14,start_value=5)
-        # self.slider("Star Rotation",0,360, line*15)
-        # self.slider("Star Spacing",0,200, line*16)
+        # Background
+        self.slider("Bg Red",0,255, line*15,start_value=108)
+        self.slider("Bg Green", 0,255, line*17,start_value=15)
+        self.slider("Bg Blue", 0,255, line*16,start_value=254)
         # duplicate for text, lower
 
     def getValues(self):

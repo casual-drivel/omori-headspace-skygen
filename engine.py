@@ -110,6 +110,7 @@ class Engine:
                         pygame.display.set_mode(
                             (self.xRes, self.yRes), pygame.RESIZABLE)
 
+
             # need to rewrite resizing logic
             # if event.type == pygame.WINDOWRESIZED:
             #     self.redrawNeeded = True
@@ -121,10 +122,29 @@ class Engine:
             self.ui.processEvent(event)
             if self.ui.uiElements['Redraw'].check_pressed() == True:
                 self.ui.getValues()
+
+                # self.ui.elementValues[""]
+                # self.noto.pixelSize = self.ui.elementValues[""] # Leave at 2 for now
                 self.noto.text = self.ui.elementValues['Emojis']
-                self.noto.updateEmojis()
+                self.noto.color = (
+                    self.ui.elementValues["Emoji Red"],
+                    self.ui.elementValues["Emoji Green"],
+                    self.ui.elementValues["Emoji Blue"]
+                )
+                self.noto.background = (
+                    self.ui.elementValues["Bg Red"],
+                    self.ui.elementValues["Bg Green"],
+                    self.ui.elementValues["Bg Blue"]
+                )
+                self.noto.percent = self.ui.elementValues["Emoji Density"] # Crashes if too low
+                self.noto.fontSize = self.ui.elementValues["Emoji Size"] # Crashes
+                self.noto.padding = self.ui.elementValues["Emoji Spacing"] # Crashes
+                self.noto.degrees = self.ui.elementValues["Emoji Rotation"]
+                self.noto.starSize = self.ui.elementValues["Star Size"]
+                self.noto.starDensity = self.ui.elementValues["Star Density"]
+
+                self.noto.update()
                 self.renderingSurface = self.noto.renderSplayed()
-                # self.redrawNeeded = True
 
     # The thing responsible for piecing it all together
     def mainFunction(self):

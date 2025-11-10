@@ -1,6 +1,7 @@
 import pygame
 import random
 import grapheme
+from pygame import SRCALPHA, BLEND_RGBA_SUB
 
 '''library for printing notoemoji wallpapers'''
 
@@ -49,20 +50,18 @@ class Noto:
         self.padding = 16  # how much padding to add and space out emoji's
         self.degrees = 30
         # ... and the stars
-        self.starSize = 4
-        self.starfontSet = pygame.font.Font(
-            "Resources/NotoEmojiFont/NotoEmoji-Regular.ttf", size=self.starSize)
+        self.starSize = 10
+        self.starfontSet = None
         self.starDensity = 5
         self.starFontSurfaces = []
         self.starSurfaces = []
 
         # load the stuff we need
-        self.fontSet = pygame.font.Font(
-            "Resources/NotoEmojiFont/NotoEmoji-Regular.ttf",
-            size=self.fontSize)
+        self.fontSet = None
         self.initFunctions()
 
     def initFunctions(self):
+        self.loadFont()
         self.defineCells()
         self.surfaceArray()
         self.spaceOutSurface()
@@ -83,6 +82,8 @@ class Noto:
 
     def defineCells(self):
         '''figure out the size of cells based on the font-size'''
+        if self.cell_dict:
+            self.cell_dict = {}
         spacing_y = [
             spacing_y for spacing_y in range(
                 0,
@@ -105,6 +106,9 @@ class Noto:
         # returns non-overlapping corners to draw surfaces on
         # takes a "percentage", and measures the side of cell_dict[0] array
 
+        if self.emoji_cell_dict_mask:
+            self.emoji_cell_dict_mask = {}
+
         cells_to_populate = int((self.percent * .01) * len(self.cell_dict[0]))
         for key in self.cell_dict.keys():  # for each row
             self.emoji_cell_dict_mask[key] = []
@@ -124,6 +128,8 @@ class Noto:
 
     def spaceOutEmojiArray(self):
         emoji_mask_surfaces = []  # where we'll store our blits
+        if self.emojiDrawArray:
+            self.emojiDrawArray = []
 
         # Datastructure is [[surface,(x,y)],[surface,(x,y)]]
         # Create the array of emoji's to blit
@@ -203,8 +209,15 @@ class Noto:
         # final step, give the surface, rendered, and ready to be displayed
         return renderSurface
 
-    def updateEmojis(self):
+    def loadFont(self):
+        self.starfontSet = pygame.font.Font(size=self.starSize)
+        self.fontSet = pygame.font.Font(
+            "Resources/NotoEmojiFont/NotoEmoji-Regular.ttf",
+            size=self.fontSize)
+
+    def update(self):
         self.initFunctions()
+        self.loadFont()
         self.spaceOutEmojiArray()
         self.starsInit()
         self.drawStars()
