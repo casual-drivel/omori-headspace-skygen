@@ -91,33 +91,42 @@ class Engine:
             if event.type == pygame.KEYDOWN:  # or event.type == pygame.KEYUP: # Removed the keyup section
                 if event.dict['key'] == pygame.K_h:
                     self.ui.toggleUI()
+                    # Add thing incase it was closed too
+
                 if event.dict['key'] == pygame.K_p:  # screenshot
-                    # print('screenshot taken!')
                     pygame.image.save(self.screen, "screenshot.png")
+
                 if event.dict['key'] == pygame.K_f:  # fullscreen toggle
                     if self.screenMode == 'windowed':
                         self.screenMode = 'fullscreen'
-                        # print(self.getMaxResolution())
-                        self.redrawNeeded = True
+                        # self.redrawNeeded = True
                         self.xRes, self.yRes = self.getMaxResolution()
                         self.screen = pygame.display.set_mode(
                             (self.xRes, self.yRes), pygame.FULLSCREEN)
+                        self.noto.screen_x, self.noto.screen_y = self.xRes, self.yRes
+                        self.noto.update()
+                        self.renderingSurface = self.noto.renderSplayed()
                     elif self.screenMode == 'fullscreen':
                         self.screenMode = 'windowed'
                         pygame.display.toggle_fullscreen()
                         self.xRes, self.yRes = 1280, 1024
-                        self.redrawNeeded = True
+                        # self.redrawNeeded = True
                         pygame.display.set_mode(
                             (self.xRes, self.yRes), pygame.RESIZABLE)
+                        self.noto.screen_x, self.noto.screen_y = self.xRes, self.yRes
+                        self.noto.update()
+                        self.renderingSurface = self.noto.renderSplayed()
 
 
             # need to rewrite resizing logic
-            # if event.type == pygame.WINDOWRESIZED:
-            #     self.redrawNeeded = True
-            #     vidinfo = pygame.display.Info()
-            #     self.xRes = vidinfo.current_w
-            #     self.yRes = vidinfo.current_h
-            #     pygame.display.set_mode((self.xRes, self.yRes), pygame.RESIZABLE)
+            if event.type == pygame.WINDOWRESIZED:
+                vidinfo = pygame.display.Info()
+                self.xRes = vidinfo.current_w
+                self.yRes = vidinfo.current_h
+                # pygame.display.set_mode((self.xRes, self.yRes), pygame.RESIZABLE)
+                self.noto.screen_x, self.noto.screen_y = self.xRes, self.yRes
+                self.noto.update()
+                self.renderingSurface = self.noto.renderSplayed()
 
             self.ui.processEvent(event)
             if self.ui.uiElements['Redraw'].check_pressed() == True:
