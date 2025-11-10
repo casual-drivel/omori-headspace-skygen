@@ -1,2 +1,4 @@
 grapheme==0.6.0
 pygame-ce==2.5.6
+pygame_gui==0.6.14
+python-i18n==0.3.9
