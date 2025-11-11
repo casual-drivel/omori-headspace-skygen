@@ -12,7 +12,7 @@ class Gui:
 
         self.screenX = screenX
         self.screenY = screenY
-        self.manager = pygame_gui.UIManager((self.screenX, self.screenY), 'Resources/fontSettings.json')
+        self.manager = pygame_gui.UIManager((self.screenX, self.screenY), 'assets/fontSettings.json')
 
         # These should be handed in by the running app
         self.clock = None

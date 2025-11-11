@@ -215,7 +215,7 @@ class Noto:
     def loadFont(self):
         self.starfontSet = pygame.font.Font(size=self.starSize)
         self.fontSet = pygame.font.Font(
-            "Resources/NotoEmojiFont/NotoEmoji-Regular.ttf",
+            "assets/NotoEmoji-Regular.ttf",
             size=self.fontSize)
 
     def update(self):
