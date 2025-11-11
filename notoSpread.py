@@ -5,6 +5,7 @@ import sys
 
 '''library for printing notoemoji wallpapers'''
 
+
 # Things to Work on
 
 # Add "Depth" to the Emoji ("Squish" the side to make "Perspective")
@@ -43,8 +44,8 @@ class Noto:
 
         # used for determine where we draw emojis
         self.percent = 30  # 30%?
-        self.emojiArray = [] # the emoji surfaces we'll use for drawing, not the final one
-        self.emojiDrawArray = [] # The array we'll use for drawing the emoji's
+        self.emojiArray = []  # the emoji surfaces we'll use for drawing, not the final one
+        self.emojiDrawArray = []  # The array we'll use for drawing the emoji's
         self.cell_dict = {}  # AFTER Processing, this is filled with "empty" tile coordinates
         self.emoji_cell_dict_mask = {}  # the random "positions" we selected from cell_dict
         self.padding = 16  # how much padding to add and space out emoji's
@@ -84,7 +85,7 @@ class Noto:
                 self.emojiArray.append(pxl_surf)
 
     def defineCells(self):
-        '''figure out the size of cells based on the font-size'''
+        """figure out the size of cells based on the font-size"""
         if self.cell_dict:
             self.cell_dict = {}
         spacing_y = [
@@ -142,7 +143,6 @@ class Noto:
                     random.choice(self.emojiArray), self.degrees), (position, row)])
 
         self.emojiDrawArray = emoji_mask_surfaces
-
 
     def starsInit(self):
         # Initialze the stars we'll use

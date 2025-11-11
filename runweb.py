@@ -1,5 +1,6 @@
 import main
-import grapheme, pygame_gui, i18n, asyncio
+from engine import Engine
+import grapheme, asyncio, pygame_gui, i18n, pygame, random, sys, notoSpread, notoFillscreen, gui
 
 asyncio.run(main.main())
 

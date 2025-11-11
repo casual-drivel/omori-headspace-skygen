@@ -35,7 +35,7 @@ class Noto:
         # self.fontSet = font.SysFont("NotoEmoji", size=self.fontSize)
 
     def render_simple(self):
-        '''simply print 3 default characters, dont define anything else except for Noto to use'''
+        """simply print 3 default characters, dont define anything else except for Noto to use"""
         return font.Font.render(
             self.fontSet,
             self.text,
@@ -44,7 +44,7 @@ class Noto:
             None)
 
     def text_jumbler(self):
-        '''returns enough emoji's to fill the screen'''
+        """returns enough emoji's to fill the screen"""
         x_length = int(self.screen_x / self.fontSize) + 50
         if len(self.text) == 1:
             return self.text * x_length
@@ -62,7 +62,7 @@ class Noto:
         return textReturn
 
     def emojiArrayInit(self):
-        '''initializes the arrays that will store the text for the text jumbler'''
+        """initializes the arrays that will store the text for the text jumbler"""
         for y in range(0, self.screen_y, self.fontSize):
             self.emojiArray.append(self.text_jumbler())
 
