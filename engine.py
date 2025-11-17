@@ -38,12 +38,12 @@ class Engine:
             self.notoSpread()
         # self.initDisplay() # might be unneeded
 
-    def guiInit(self):
-        # given our shoddy architecture, we'll call this during the initial rendering, and not the loop
-        self.ui = gui.Gui(self.xRes,self.yRes,self.emojis,self.screen)
-        self.ui.clock = self.clock
-        # self.ui.drawButton() # POC to test this works, we really dont need it actually
-        self.ui.uiContainerInit()
+    # def guiInit(self):
+    #     # given our shoddy architecture, we'll call this during the initial rendering, and not the loop
+    #     self.ui = gui.Gui(self.xRes,self.yRes,self.emojis,self.screen)
+    #     self.ui.clock = self.clock
+    #     # self.ui.drawButton() # POC to test this works, we really dont need it actually
+    #     self.ui.uiContainerInit()
 
     def notoFillscreen(self):
         # Used only for the screen filler
@@ -71,7 +71,7 @@ class Engine:
                                     text=self.emojis
                                     )
         self.renderingSurface = self.noto.renderSplayed()
-        self.guiInit()
+        # self.guiInit()
 
 
     def returnDisplay(self):
@@ -128,32 +128,32 @@ class Engine:
                 self.noto.update()
                 self.renderingSurface = self.noto.renderSplayed()
 
-            self.ui.processEvent(event)
-            if self.ui.uiElements['Redraw'].check_pressed() == True:
-                self.ui.getValues()
-
-                # self.ui.elementValues[""]
-                # self.noto.pixelSize = self.ui.elementValues[""] # Leave at 2 for now
-                self.noto.text = self.ui.elementValues['Emojis']
-                self.noto.color = (
-                    self.ui.elementValues["Emoji Red"],
-                    self.ui.elementValues["Emoji Green"],
-                    self.ui.elementValues["Emoji Blue"]
-                )
-                self.noto.background = (
-                    self.ui.elementValues["Bg Red"],
-                    self.ui.elementValues["Bg Green"],
-                    self.ui.elementValues["Bg Blue"]
-                )
-                self.noto.percent = self.ui.elementValues["Emoji Density"] # Crashes if too low
-                self.noto.fontSize = self.ui.elementValues["Emoji Size"] # Crashes
-                self.noto.padding = self.ui.elementValues["Emoji Spacing"] # Crashes
-                self.noto.degrees = self.ui.elementValues["Emoji Rotation"]
-                self.noto.starSize = self.ui.elementValues["Star Size"]
-                self.noto.starDensity = self.ui.elementValues["Star Density"]
-
-                self.noto.update()
-                self.renderingSurface = self.noto.renderSplayed()
+            # self.ui.processEvent(event)
+            # if self.ui.uiElements['Redraw'].check_pressed() == True:
+            #     self.ui.getValues()
+            #
+            #     # self.ui.elementValues[""]
+            #     # self.noto.pixelSize = self.ui.elementValues[""] # Leave at 2 for now
+            #     self.noto.text = self.ui.elementValues['Emojis']
+            #     self.noto.color = (
+            #         self.ui.elementValues["Emoji Red"],
+            #         self.ui.elementValues["Emoji Green"],
+            #         self.ui.elementValues["Emoji Blue"]
+            #     )
+            #     self.noto.background = (
+            #         self.ui.elementValues["Bg Red"],
+            #         self.ui.elementValues["Bg Green"],
+            #         self.ui.elementValues["Bg Blue"]
+            #     )
+            #     self.noto.percent = self.ui.elementValues["Emoji Density"] # Crashes if too low
+            #     self.noto.fontSize = self.ui.elementValues["Emoji Size"] # Crashes
+            #     self.noto.padding = self.ui.elementValues["Emoji Spacing"] # Crashes
+            #     self.noto.degrees = self.ui.elementValues["Emoji Rotation"]
+            #     self.noto.starSize = self.ui.elementValues["Star Size"]
+            #     self.noto.starDensity = self.ui.elementValues["Star Density"]
+            #
+            #     self.noto.update()
+            #     self.renderingSurface = self.noto.renderSplayed()
 
     # The thing responsible for piecing it all together
     def mainFunction(self):
@@ -169,8 +169,8 @@ class Engine:
             self.screen.blit(self.renderingSurface, (0, 0))
 
             # UI Stuff
-            self.ui.processTime()
-            self.ui.draw_ui()
+            # self.ui.processTime()
+            # self.ui.draw_ui()
 
             self.pygame.display.flip()
 

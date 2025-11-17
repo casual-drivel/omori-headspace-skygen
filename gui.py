@@ -10,9 +10,14 @@ class Gui:
         # this is really just a wrapper for the gui library
         # we could probably actually get rid of some of these functions ans just call the mgr
 
+        self.pygame = pygame
+        self.pygame.init()  # initialize the library
+        self.pygame.font.init()
+
         self.screenX = screenX
         self.screenY = screenY
-        self.manager = pygame_gui.UIManager((self.screenX, self.screenY), 'Resources/fontSettings.json')
+        self.manager = pygame_gui.UIManager((self.screenX, self.screenY), "Resources/fontSettings.json", starting_language='en')
+
 
         # These should be handed in by the running app
         self.clock = None
@@ -65,7 +70,7 @@ class Gui:
             relative_rect = pygame.Rect((x+60,y),(170,30)),
             container = self.uiContainer,
             manager = self.manager,
-            object_id = "defaults"
+            object_id = "notoemoji"
         )
 
         label = pygame_gui.elements.UILabel(

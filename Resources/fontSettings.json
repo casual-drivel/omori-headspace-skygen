@@ -1,5 +1,5 @@
 {
-     "defaults":
+     "notoemoji":
      {
          "font":
          {
@@ -7,7 +7,8 @@
             "regular_path": "./Resources/NotoEmojiFont/NotoEmoji-Regular.ttf",
             "size": 12,
             "bold": false,
-            "italic": false
+            "italic": false,
+            "locale": "en"
          }
      }
 }
