@@ -7,6 +7,9 @@ import gui
 
 class Engine:
     def __init__(self, mode):
+        self.pygame = pygame
+        self.pygame.init()  # initialize the library
+        self.pygame.font.init()
         # Fallbacks
         self.emojis = "🤎🖤💛💚💙✨⭐💫❤︎‍🩹🌟🌙☄" #"🌎️🛌🛰️📖💎🪐🌕️👁️s⭐️"
         self.xRes = 1280
@@ -18,11 +21,11 @@ class Engine:
 
         # important stuff
         self.running = True
-        self.screen = pygame.display.set_mode((self.xRes, self.yRes), pygame.RESIZABLE)
-        self.clock = pygame.time.Clock()
+        self.screen = self.pygame.display.set_mode((self.xRes, self.yRes), self.pygame.RESIZABLE)
+        self.clock = self.pygame.time.Clock()
         self.events = None
         self.noto = None  # the Noto Drawing Library
-        self.pygame = pygame  # ?????
+
         self.pygame.key.set_repeat(0)
         # Program stretches its legs
         self.initFunctions()  # run last or fix noto
@@ -33,8 +36,6 @@ class Engine:
             self.notoFillscreen()  # initialize the screenfiller
         elif self.mode == 'spread':
             self.notoSpread()
-        pygame.init()  # initialize the library
-        pygame.font.init()
         # self.initDisplay() # might be unneeded
 
     def guiInit(self):
@@ -77,50 +78,50 @@ class Engine:
         return self.screen
 
     def getMaxResolution(self):
-        screen_width, screen_height = pygame.display.get_desktop_sizes()[0]
+        screen_width, screen_height = self.pygame.display.get_desktop_sizes()[0]
         return screen_width, screen_height
 
     def eventHandler(self):
-        self.events = pygame.event.get()  # get the events
+        self.events = self.pygame.event.get()  # get the events
 
         # We need to move this elsewhere... later
         for event in self.events:
-            if event.type == pygame.QUIT:
+            if event.type == self.pygame.QUIT:
                 self.running = False
 
-            if event.type == pygame.KEYDOWN:  # or event.type == pygame.KEYUP: # Removed the keyup section
-                if event.dict['key'] == pygame.K_h:
+            if event.type == self.pygame.KEYDOWN:  # or event.type == pygame.KEYUP: # Removed the keyup section
+                if event.dict['key'] == self.pygame.K_h:
                     self.ui.toggleUI()
                     # Add thing incase it was closed too
 
-                if event.dict['key'] == pygame.K_p:  # screenshot
-                    pygame.image.save(self.screen, "screenshot.png")
+                if event.dict['key'] == self.pygame.K_p:  # screenshot
+                    self.pygame.image.save(self.screen, "screenshot.png")
 
-                if event.dict['key'] == pygame.K_f:  # fullscreen toggle
+                if event.dict['key'] == self.pygame.K_f:  # fullscreen toggle
                     if self.screenMode == 'windowed':
                         self.screenMode = 'fullscreen'
                         # self.redrawNeeded = True
                         self.xRes, self.yRes = self.getMaxResolution()
-                        self.screen = pygame.display.set_mode(
-                            (self.xRes, self.yRes), pygame.FULLSCREEN)
+                        self.screen = self.pygame.display.set_mode(
+                            (self.xRes, self.yRes), self.pygame.FULLSCREEN)
                         self.noto.screen_x, self.noto.screen_y = self.xRes, self.yRes
                         self.noto.update()
                         self.renderingSurface = self.noto.renderSplayed()
                     elif self.screenMode == 'fullscreen':
                         self.screenMode = 'windowed'
-                        pygame.display.toggle_fullscreen()
+                        self.pygame.display.toggle_fullscreen()
                         self.xRes, self.yRes = 1280, 1024
                         # self.redrawNeeded = True
-                        pygame.display.set_mode(
-                            (self.xRes, self.yRes), pygame.RESIZABLE)
+                        self.pygame.display.set_mode(
+                            (self.xRes, self.yRes), self.pygame.RESIZABLE)
                         self.noto.screen_x, self.noto.screen_y = self.xRes, self.yRes
                         self.noto.update()
                         self.renderingSurface = self.noto.renderSplayed()
 
 
             # need to rewrite resizing logic
-            if event.type == pygame.WINDOWRESIZED:
-                vidinfo = pygame.display.Info()
+            if event.type == self.pygame.WINDOWRESIZED:
+                vidinfo = self.pygame.display.Info()
                 self.xRes = vidinfo.current_w
                 self.yRes = vidinfo.current_h
                 self.noto.screen_x, self.noto.screen_y = self.xRes, self.yRes
